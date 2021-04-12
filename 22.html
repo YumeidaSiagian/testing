@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  </head>
+  <body>
+    <canvas id="myCanvas" width="500" height="500">
+		Maaf! Browser Anda tidak mendukung canvas
+	</canvas>
+	<style>
+        #myCanvas{
+			border:1px solid black;
+            margin-left:30%;
+            margin-top: 5%;
+		}
+    </style>
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var myGameArea = {
+        canvas: canvas,
+        start: function() {
+            this.context = this.canvas.getContext("2d");
+            this.interval = setInterval(updateGameArea, 20);
+        },
+        clear: function() {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+    }
+
+    myGameArea.start();
+
+    var p1 = new component(30, 30, "red", 10, 120);
+    var p2 = new component(30, 30, "blue", 10, 160)
+    var p3 = new component(60, 60, "bb.gif", 10, 200, "image");
+    
+    function updateGameArea() {
+
+        myGameArea.clear();
+        p1.update();
+        p2.update();
+        p3.update();
+    }
+
+    function component(width, height, color, x, y, type) {
+        this.type = type;
+            if (type == "image") {
+            this.image = new Image();
+            this.image.src = color;
+            }
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+        context = myGameArea.context;
+        context.fillRect(this.x, this.y, this.width, this.height);
+        this.update = function() {
+
+            this.x += Math.round(Math.random() * 10, 0) % 3;
+            ctx = myGameArea.context;
+            if (type == "image") {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            } else {
+            context.fillStyle = color;
+            context.fillRect(this.x, this.y, this.width, this.height);
+            }
+        }
+    }
+</script>
+</body> 
+</html>
